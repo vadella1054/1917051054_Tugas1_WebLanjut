@@ -1,6 +1,8 @@
 <?= $this->extend('template'); ?>
 
 <?= $this->section('content'); ?>
+
+<body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
   <!-- Preloader -->
@@ -162,7 +164,7 @@
           <img src="/assets/adminlte/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">Maghviraturreimadhiney</a>
         </div>
       </div>
 
