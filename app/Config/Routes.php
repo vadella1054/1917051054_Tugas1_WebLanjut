@@ -32,35 +32,39 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', function (){
+$routes->get('/', function(){
 	$data = [
 		'title' => "Blog - Home"
 	];
-	echo view('layouts/header', $data);
-	echo view('layouts/navbar');
-	echo view('v_home');
-	echo view('layouts/footer');;
+	echo view('layouts/header', $data) ;
+	echo view('layouts/navbar') ;
+	echo view('v_home') ;
+	echo view('layouts/footer') ;
 });
 
-$routes->get('/admin', 'Templating::index');
-$routes->get('/posts', 'PostController::index');
+
+
 $routes->get('/register', 'Templating::register');
+
 $routes->post('/saveRegister', 'Templating::saveRegister');
 
-$routes->get('/about', function (){ 
+$routes->get('/posts', 'PostController::index') ;
+
+$routes->get('/about', function(){
 	$data = [
 		'title' => "Blog - About"
 	];
-	echo view('layouts/header', $data);
-    echo view('layouts/navbar');
-	echo view('v_about');
-    echo view('layouts/footer');
-
+	echo view('layouts/header', $data) ;
+	echo view('layouts/navbar') ;
+	echo view('v_about') ;
+	echo view('layouts/footer') ;
 });
 
+$routes->get('/admin', 'Templating::index');
 $routes->get('/admin/posts', 'AdminPostsController::index');
 $routes->get('/admin/posts/create', 'AdminPostsController::create');
-$routes->get('/admin/posts/store', 'AdminPostsController::store');
+$routes->post('/admin/posts/store', 'AdminPostsController::store');
+
 
 /*
  * --------------------------------------------------------------------
