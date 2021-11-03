@@ -3,21 +3,31 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\PostModel;
 
 class AdminPostsController extends BaseController
 {
+	public function __construct() {
+ 
+        // Mendeklarasikan class BukuModel menggunakan $this->tokobuku
+        $this->posts = new PostModel();
+        /* Catatan:
+        Apa yang ada di dalam function construct ini nantinya bisa digunakan
+        pada function di dalam class Tokobuku
+        */
+    }
 	public function index()
 	{
 		$PostModel = model("PostModel");
 		$data = [
 			'posts' => $PostModel->findAll()
 		];
-		return view("posts/index", $data);
+        return view("posts/index", $data);
 	}
 
 	public function create()
 	{
-		session();
+        session();
 		$data = [
 			'validation' => \Config\Services::validation(),
 		];
@@ -78,10 +88,72 @@ class AdminPostsController extends BaseController
 
 			$PostModel = model("PostModel");
 			$PostModel->insert($data);
+			session()->setFlashdata('success', 'Data berhasil ditambahkan');
 			return redirect()->to(base_url('admin/posts'));
 	
 		} else {
 			return redirect()->to(base_url('admin/posts/create'))->withInput()->with('validation', $this->validator);
 		}
 	}
+
+	public function edit($post_id){
+		$data = [
+			'title' => 'Form Edit Data',
+			'validation' => \Config\Services::validation(),
+			'post' => $this->posts->getPosts($post_id)
+		];
+		return view("posts/edit", $data);
+	}
+
+	public function update($post_id){
+		$valid = $this->validate([
+			"judul" => [
+				"label" => "Judul",
+				"rules" => "required",
+				"errors" => [
+					"required" => "{field} Harus Diisi!",
+				]
+			],
+			"kategori" => [
+				"label" => "Kategori",
+				"rules" => "required",
+				"errors" => [
+					"required" => "{field} Harus Diisi!",
+				]
+			],
+			"author" => [
+				"label" => "Author",
+				"rules" => "required",
+				"errors" => [
+					"required" => "{field} Harus Diisi!",
+				]
+			],
+		]);
+
+		if ($valid) {
+		$this->posts->save([
+			'post_id' => $post_id,
+			'judul' => $this->request->getVar('judul'),
+			'kategori' => $this->request->getVar("kategori"),
+			'author' => $this->request->getVar("author"),
+			'deskripsi' => $this->request->getVar("deskripsi")
+		]);
+
+		session()->setFlashdata('success', 'Data berhasil diubah');
+		return redirect()->to(base_url('admin/posts'));
+		
+		}
+		else {
+			return 'Semua data harus diisi !';
+
+		}
+	}
+
+	
+	public function delete($post_id) {
+		$this->posts->delete($post_id);
+		session()->setFlashdata('success', 'Data berhasil dihapus');
+		return redirect()->to(base_url('admin/posts'));
+	}
+	
 }

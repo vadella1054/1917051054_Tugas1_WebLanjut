@@ -18,48 +18,10 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
+        <a href="/home" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
-      </li>
-    </ul>
-
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-      <!-- Navbar Search -->
-      <li class="nav-item">
-        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-          <i class="fas fa-search"></i>
-        </a>
-        <div class="navbar-search-block">
-          <form class="form-inline">
-            <div class="input-group input-group-sm">
-              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-              <div class="input-group-append">
-                <button class="btn btn-navbar" type="submit">
-                  <i class="fas fa-search"></i>
-                </button>
-                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </li>
-
-      <!-- Messages Dropdown Menu -->
-    
-      <li class="nav-item">
-        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-          <i class="fas fa-expand-arrows-alt"></i>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
-        </a>
+        <a href="/about" class="nav-link">Contact</a>
       </li>
     </ul>
   </nav>
@@ -136,8 +98,6 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -149,70 +109,64 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                Form Tambah Data
-            </div>
-            <div class="card-body">
-              <form action="/admin/posts/store" method="POST">
+                Form Edit Data
+                <div class="card-body">
+                <form action="/admin/posts/update/<?=$post['slug'];?>" method="post">
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="judul">Judul Postingan</label>
-                                <input type="text" class="form-control <?= ($validation->hasError('judul')) ? 'is-invalid' : ''; ?>" id="judul" name="judul" value="<?= old('judul'); ?>">
-                                <?php if ($validation->hasError('judul')) : ?>
-                                  <div class="invalid-feedback">
-                                    <?= $validation->getError("judul"); ?>
-                                  </div>
+                                <input type="text" class="form-control <?= ($validation->hasError('judul')) ? 'is-invalid' : ''; ?>" id="judul" name="judul" value="<?= (old('judul')) ? old('judul') : $post['judul'];?>">
+                                <?php if($validation->hasError('judul')) : ?>
+                                <div class="invalid-feedback">
+                                  <?= $validation->getError("judul"); ?>
+                                </div>
                                 <?php endif; ?>         
                             </div>
                             <div class="form-group">
                                 <label for="slug">Slug</label>
-                                <input type="text" class="form-control <?= ($validation->hasError('slug')) ? 'is-invalid' : ''; ?>" id="slug" name="slug" value="<?= old('slug'); ?>">
-                                <?php if ($validation->hasError('slug')) : ?>
-                                  <div class="invalid-feedback">
-                                    <?= $validation->getError("slug"); ?>
-                                  </div>
-                                <?php endif; ?>             
+                                <input type="text" class="form-control <?= ($validation->hasError('slug')) ? 'is-invalid' : ''; ?>" id="slug" name="slug" value="<?= (old('slug')) ? old('slug') : $post['slug'];?>" disabled>
+                                <?php if($validation->hasError('slug')) : ?>
+                                <div class="invalid-feedback">
+                                  <?= $validation->getError("slug"); ?>
+                                </div>
+                                <?php endif; ?>  
                               </div>
                             <div class="form-group">
                                 <label for="kategori">Kategori Postingan</label>
-                                <input type="text" class="form-control <?= ($validation->hasError('kategori')) ? 'is-invalid' : ''; ?>" id="kategori" name="kategori" value="<?= old('kategori'); ?>">
-                                <?php if ($validation->hasError('kategori')) : ?>
-                                  <div class="invalid-feedback">
-                                    <?= $validation->getError("kategori"); ?>
-                                  </div>
+                                <input type="text" class="form-control <?= ($validation->hasError('kategori')) ? 'is-invalid' : ''; ?>" id="kategori" name="kategori" value="<?= (old('kategori')) ? old('kategori') : $post['kategori'];?>">
+                                <?php if($validation->hasError('kategori')) : ?>
+                                <div class="invalid-feedback">
+                                  <?= $validation->getError("kategori"); ?>
+                                </div>   
                                 <?php endif; ?>      
                             </div>
                             <div class="form-group">
                                 <label for="author">Author</label>
-                                <input type="text" class="form-control <?= ($validation->hasError('author')) ? 'is-invalid' : ''; ?>" id="author" name="author" value="<?= old('author'); ?>">
-                                <?php if ($validation->hasError('author')) : ?>
-                                  <div class="invalid-feedback">
-                                    <?= $validation->getError("author"); ?>
-                                  </div>
-                                <?php endif; ?>          
+                                <input type="text" class="form-control <?= ($validation->hasError('author')) ? 'is-invalid' : ''; ?>" id="author" name="author" value="<?= (old('author')) ? old('author') : $post['author'];?>"> 
+                                <?php if($validation->hasError('author')) : ?>
+                                <div class="invalid-feedback">
+                                  <?= $validation->getError("author"); ?>
+                                </div>        
+                                <?php endif; ?>
                             </div>
                             <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-paper-plane"></i>Submit
+                                <i class="fas fa-paper-plane"></i> Edit Data
                             </button>
                         </div>
                         <div class="col-md-8">
-                            <label for="deskripsi"> Deskripsi Postingan</label>
-                            <br>
+                            <label for="deskripsi"> Deskripsi Postingan</label><br>
                             <textarea name="deskripsi" id="deskripsi" class="form-control <?= ($validation->hasError('deskripsi')) ? 'is-invalid' : ''; ?>">
-                            <?= old('deskripsi'); ?>
-                            </textarea>
-                            <?php if ($validation->hasError('deskripsi')) : ?>
-                              <div class="invalid-feedback">
-                                <?= $validation->getError("deskripsi"); ?>
-                              </div>
-                            <?php endif; ?> 
+                            <?=old("deskripsi");?></textarea>
+                            <?php if($validation->hasError('deskripsi')) : ?>
                         </div>
+                        <?php endif; ?>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <!-- /.content -->
+      <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
